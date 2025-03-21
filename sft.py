@@ -27,7 +27,7 @@ config = SFTConfig(
     warmup_ratio=0.1,
     lr_scheduler_type='cosine',
     bf16=True,
-    per_device_train_batch_size=4,
+    per_device_train_batch_size=16,
     num_train_epochs=3,
     max_grad_norm=0.1,
     report_to="wandb",
@@ -37,9 +37,7 @@ config = SFTConfig(
     logging_steps=1,
     save_strategy="steps",
     save_total_limit=1,
-    save_steps=120,
-    # DeepSpeed configuration
-    deepspeed="ds_config.json",
+    save_steps=50,
 )
 
 trainer = SFTTrainer(
