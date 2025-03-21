@@ -27,7 +27,7 @@ def solve_game(board):
                 return (2-i,2-j)
     #error
     return (-1,-1)
-    #find an X with no O across from it (through the center)
+    
 def random_move(board):
     #returns a random move (chooses random empty space)
     empty_spaces = []
@@ -74,13 +74,16 @@ def generate_random_game():
     return states
 
 def print_board(state):
+    #returns a string representation of the board
+    out = ""
     for i in range(3):
         for j in range(3):
             if(state[i][j] == 0):
-                print(" ", end="")
+                out += " "
             else:
-                print("X" if state[i][j] == 1 else "O", end="")
-        print()
+                out += "X" if state[i][j] == 1 else "O"
+        out += "\n"
+    return out
 
 
 def generate_data(num_games):
@@ -91,8 +94,3 @@ def generate_data(num_games):
             dataset.add(state)
     return dataset
 
-states = generate_random_game()
-for board in states:
-    print("---")
-    print_board(board.game_state)
-    print("---")
