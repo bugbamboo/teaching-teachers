@@ -5,11 +5,14 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import json
 
-os.environ["WANDB_PROJECT"] = "chess-sft"
+os.environ["WANDB_PROJECT"] = "TTT"
 
 
 # Save DeepSpeed config to a f
 ds = Dataset.load_from_disk("toetactic_train_dataset")
+ds = ds.shuffle(seed=42)
+ds_eval = Dataset.load_from_disk("toetactic_eval_dataset")
+ds_eval = ds_eval.shuffle(seed=42)
 
 model = AutoModelForCausalLM.from_pretrained(
 "Qwen/Qwen2.5-0.5B",
@@ -44,7 +47,8 @@ trainer = SFTTrainer(
     model=model,
     processing_class=tokenizer,
     args=config,
-    train_dataset=ds
+    train_dataset=ds,
+    eval_dataset=ds
 )
 
 trainer.train()
